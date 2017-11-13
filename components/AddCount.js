@@ -4,12 +4,18 @@ import { bindActionCreators } from 'redux'
 import { addCount } from '../store'
 
 class AddCount extends Component {
-  add = () => {
+  constructor(props) {
+    super(props)
+    this.addEventCounter = this.addEventCounter.bind(this)
+  }
+
+  addEventCounter() {
     this.props.addCount()
   }
 
   render () {
     const { count } = this.props
+
     return (
       <div>
         <style jsx>{`
@@ -18,16 +24,25 @@ class AddCount extends Component {
           }
       `}</style>
         <p>AddCount: <span>{count}</span></p>
-        <button onClick={this.add}>Add To Count</button>
+        <button onClick={this.addEventCounter}>Add To Count</button>
       </div>
     )
   }
 }
 
+/*function mapStateToProps(state) {
+  let data = {
+    count: state.count
+  }
+  return data
+}*/
+
 const mapStateToProps = ({ count }) => ({ count }) // to this.props.count
+
 // * this component is sub from store update: Any time the store is updated, mapStateToProps will be called
 // * the result is a must be a plane text, which will be merged into the components props
 // * If you don't want to subscribe to store updates, pass null or undefined in place of mapStateToProps.
+
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -39,11 +54,5 @@ const mapDispatchToProps = (dispatch) => {
 // * object: each function insate is asumed to be a redux action
 // * function: you get "dispatch" as first parameter, to bind dispatch, use bindActionCreators()
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(AddCount)
 
-
-/* map state to props */
-function mapStateTOPRops ({ count }) {
-  return ({ count })
-}
