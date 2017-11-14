@@ -92,7 +92,7 @@ class Sample extends React.Component {
   }
 
   render () {
-    console.log('render is called??')
+    console.log('render is called??', this.props)
     return (
       <div>
         <div>
