@@ -14,6 +14,7 @@ const exampleInitialState = {
 
 export const actionTypes = {
   ADD: 'ADD',
+  REMOVE: 'REMOVE',
   TICK: 'TICK',
   NUMBER: 'NUMBER',
   BOOLDATA: 'BOOLDATA',
@@ -32,6 +33,10 @@ export const reducer = (state = exampleInitialState, action) => {
     case actionTypes.ADD:
       return Object.assign({}, state, {
         count: state.count + 1
+      })
+    case actionTypes.REMOVE:
+      return Object.assign({}, state, {
+        count: state.count - 1
       })
     case actionTypes.NUMBER:
       return Object.assign({}, state, {
@@ -64,6 +69,10 @@ export const startClock = () => dispatch => {
 
 export const addCount = () => dispatch => {
   return dispatch({ type: actionTypes.ADD })
+}
+
+export const removeCount = () => dispatch => {
+  return dispatch({ type: actionTypes.REMOVE })
 }
 
 export const getPlusNumber = () => dispatch => {
