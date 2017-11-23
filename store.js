@@ -91,6 +91,10 @@ export const updateGift = (text) => dispatch => {
   return dispatch({ type: actionTypes.GIFT, text: text })
 }
 
+export const updateCoupon = (text) => dispatch => {
+  return dispatch({ type: actionTypes.CART })
+}
+
 export const initStore = (initialState = exampleInitialState) => {
   return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))
 }
@@ -102,7 +106,8 @@ export const initStore = (initialState = exampleInitialState) => {
 // update the current number +
 // update the current text +
 
-
 // product example + cart
 
 // cart +1, -1, update number, remove,
+
+
