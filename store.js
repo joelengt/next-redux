@@ -214,3 +214,28 @@ export const fetchMainData = text => dispatch => {
 export const initStore = (initialState = exampleInitialState) => {
   return createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...middleware)))
 }
+
+
+
+
+//
+
+// var obj = {
+//   name: 'joel',
+//   lastName: 'gonzales',
+//   age: 21,
+//   phone: 21312321
+// }
+
+
+// const { selectedSubreddit, postsBySubreddit } = state
+// var { name, lastName, ...info } = { name: 'alcachona' } || obj
+
+// const { 
+//   name,
+//   lastName,
+//   lastAvegareAges: post(data),
+//   ...info
+// } = obj || { name: 'alcachofa', lastName: 'pp' }
+
+
