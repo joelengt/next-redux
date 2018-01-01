@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
+import _ from 'lodash'
 
 /* set Provider */
 // import { Provider } from 'react-redux'
@@ -28,7 +29,10 @@ export const actionTypes = {
   CART: 'CART',
   CART_ADD: 'CART_ADD',
   CART_REMOVE: 'CART_REMOVE',
-  CART_UPDATE: 'CART_UPDATE'
+  CART_UPDATE: 'CART_UPDATE',
+  IMPROVE_ADD: 'IMPROVE_ADD',
+  IMPROVE_REMOVE: 'IMPROVE_REMOVE',
+  IMPROVE_UPDATE: 'IMPROVE_UPDATE'
 }
 
 const exampleInitialState = {
@@ -43,10 +47,44 @@ const exampleInitialState = {
 
 const initialStatePost = {
   isFetching: false,
-  didInvalidate: false,
-  items: []
+  didInvalidate: 'saludos'
 }
 
+const initialStateImprove = {
+  items: ['a', 'b'],
+  didInvalidate: 'saludos',
+  carrito: {
+    summary: {
+      quantity: 7,
+      subTotal: '11.000',
+      igv: '1.000',
+      total: '12.000'
+    },
+    items: [
+      {
+        id: 213,
+        quantity: 4,
+        name: 'poo A',
+        price: '21.00',
+        subTotal: '84.00'
+      },
+      {
+        id: 21,
+        quantity: 1,
+        name: 'poo B',
+        price: '11.00',
+        subTotal: '49.00'
+      },
+      {
+        id: 45,
+        quantity: 2,
+        name: 'poo C',
+        price: '41.00',
+        subTotal: '184.00'
+      }
+    ]
+  }
+}
 
 // REDUCERS
 export const posts = (state = initialStatePost, action) => {
@@ -78,7 +116,7 @@ export const posts = (state = initialStatePost, action) => {
   }
 }
 
-export const reducer = (state = exampleInitialState, action) => {
+export const main = (state = exampleInitialState, action) => {
   switch (action.type) {
     case actionTypes.TICK:
       return {
@@ -128,18 +166,18 @@ export const reducer = (state = exampleInitialState, action) => {
   }
 }
 
-export const cart = (state = exampleInitialState, action) => {
+export const cart = (state = initialStatePost, action) => {
   switch (action.type) {
     case actionTypes.CART_ADD:
       return {
         ...state,
-        turning: !state.turning
+        turning: !state.isFetching
       }
 
     case actionTypes.CART_REMOVE:
       return {
         ...state,
-        cart: action.cart
+        cart: action.didInvalidate
       }
 
     case actionTypes.CART_UPDATE:
@@ -153,9 +191,56 @@ export const cart = (state = exampleInitialState, action) => {
   }
 }
 
+export const improve = (state = initialStateImprove, action) => {
+  switch (action.type) {
+    case actionTypes.IMPROVE_UPDATE:
+      return {
+        ...state,
+        items: action.items
+      }
+
+    case actionTypes.CART_ADD:
+      let product = action.product
+
+      console.log('CALL ')
+
+      // add producto de the cart
+      state.carrito.items.push({
+        id: 99,
+        quantity: 3,
+        name: 'poo New',
+        price: '50.00',
+        subTotal: '200.00'
+      })
+
+      return {
+        ...state,
+        carrito: state.carrito
+      }
+
+    case actionTypes.CART_REMOVE:
+
+      let productID = action.productID
+
+      // remove producto de the cart
+      _.remove(state.carrito.items, (product) => {
+        return product.id === productID;
+      });
+
+      return {
+        ...state,
+        carrito: state.carrito
+      }
+
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
-  reducer,
-  cart
+  main,
+  cart,
+  improve
 })
 
 // ACTIONS
@@ -195,6 +280,20 @@ export const updateCoupon = (text) => (dispatch, getState) => {
   return dispatch({ type: actionTypes.CART })
 }
 
+export const updateImprove = (items) => (dispatch, getState) => {
+  return dispatch({ type: actionTypes.IMPROVE_UPDATE, items })
+}
+
+export const updateCartImprove = (product) => (dispatch, getState) => {
+  console.log('product data', product);
+  return dispatch({ type: actionTypes.CART_ADD, product })
+}
+
+export const deleteItemCartImprove = (productID) => (dispatch, getState) => {
+  console.log('Item to delete', productID )
+  return dispatch({ type: actionTypes.CART_REMOVE, productID })
+}
+
 /* actions set */
 export const getText = text => ({
   type: actionTypes.GIFT,
@@ -231,11 +330,9 @@ export const initStore = (initialState = exampleInitialState) => {
 // const { selectedSubreddit, postsBySubreddit } = state
 // var { name, lastName, ...info } = { name: 'alcachona' } || obj
 
-// const { 
+// const {
 //   name,
 //   lastName,
 //   lastAvegareAges: post(data),
 //   ...info
 // } = obj || { name: 'alcachofa', lastName: 'pp' }
-
-

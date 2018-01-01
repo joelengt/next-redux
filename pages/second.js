@@ -6,7 +6,7 @@ import Page from '../components/Page'
 import Link from 'next/link'
 
 class Second extends React.Component {
-  static getInitialProps ({ store, isServer }) {
+  static getInitialProps ({ req, store, isServer }) {
     store.dispatch(serverRenderClock(isServer))
     store.dispatch(addCount())
     return { isServer }
@@ -60,4 +60,3 @@ Second.defaultProps = {
 }
 
 export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Second)
-
