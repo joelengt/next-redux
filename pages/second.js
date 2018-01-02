@@ -54,7 +54,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = ({ count }) => ({ count })
 
-
 Second.defaultProps = {
   hello: 'It is me'
 }

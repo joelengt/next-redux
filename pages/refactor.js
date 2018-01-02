@@ -7,7 +7,10 @@ import User from '../components/user'
 import Product from '../components/product'
 
 import {
-  initStore,
+  initStore
+} from '../store'
+
+import {
   startClock,
   getPlusNumber,
   serverRenderClock,
@@ -16,8 +19,11 @@ import {
   updateGift,
   updateImprove,
   updateCartImprove,
-  deleteItemCartImprove
-} from '../store'
+  deleteItemCartImprove,
+  fetchMainData,
+  getText,
+  eventPOST
+} from '../actions'
 
 class Refactor extends React.Component {
   static getInitialProps ({ store, isServer }) {
@@ -78,6 +84,12 @@ class Refactor extends React.Component {
 
     $storeDispatch.updateCartImprove(product)
 
+    /* Try text to dispatch */
+    console.log('Resturn DATA STRING==>', $storeDispatch.fetchMainData('hello :3') )
+
+
+    $storeDispatch.eventPOST('human')
+
   }
 
   updateCart() {
@@ -122,6 +134,10 @@ class Refactor extends React.Component {
     return (
       <div>
         <div>
+          <div>
+            a: { $storeState.improve.human.isFetching }
+            b: { $storeState.improve.human.didInvalidate }
+          </div>
           <p>Render redux from { this.props.isServer ? 'server': 'client' }!</p>
           <p>value: { $storeState.main.value }</p>
           <div>
@@ -220,6 +236,8 @@ const mapDispatchToProps = (dispatch) => {
     updateImprove: bindActionCreators(updateImprove, dispatch),
     updateCartImprove: bindActionCreators(updateCartImprove, dispatch),
     deleteItemCartImprove: bindActionCreators(deleteItemCartImprove, dispatch),
+    fetchMainData: bindActionCreators(fetchMainData, dispatch),
+    eventPOST: bindActionCreators(eventPOST, dispatch)
   }
 
   return { $storeDispatch }

@@ -6,14 +6,17 @@ import PlusCounter from '../components/plus-counter'
 import User from '../components/user'
 
 import {
-  initStore,
+  initStore
+} from '../store'
+
+import {
   startClock,
   getPlusNumber,
   serverRenderClock,
   updateStateTurning,
   updateCart,
   updateGift
-} from '../store'
+} from '../actions'
 
 class Sample extends React.Component {
   static getInitialProps ({ store, isServer }) {
@@ -70,7 +73,7 @@ class Sample extends React.Component {
 
     console.log('cart state ==> ', this.state.itemCounter)
     console.log('message state ==> ', this.state.inputText)
-    
+
   }
 
   handlerButton(e) {

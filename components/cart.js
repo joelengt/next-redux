@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   cartAddItem
-} from '../store'
+} from '../actions'
 
 class Cart extends Component {
   static getInitialProps ({ store, isServer }) {

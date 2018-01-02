@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux'
 
 import {
   updateCartImprove,
-  deleteItemCartImprove
-} from '../store'
+  deleteItemCartImprove,
+  getText
+} from '../actions'
 
 class Product extends Component {
   constructor(props) {
